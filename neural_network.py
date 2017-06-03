@@ -21,7 +21,7 @@ def bias_variable(shape):
 def neural_net(x, y, keep_prob):
 
 	# conv layers varibles
-	W_conv1 = weight_variable([5, 5, 3, 64])
+	W_conv1 = weight_variable([5, 5, 4, 64])
 	b_conv1 = bias_variable([64])
 	W_conv2 = weight_variable([5, 5, 64, 64])
 	b_conv2 = bias_variable([64])
