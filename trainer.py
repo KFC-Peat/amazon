@@ -9,9 +9,10 @@ import time
 
 from neural_network import neural_net
 
-# This function trains a binary neural network to determine whether a feature is present
-def trainer(feature):
 
+
+# Load the training data
+def data_loader():
 	# Load the training data
 	with open('../numpy_data/train_images_64.npy', 'rb') as f:
 		image_array = np.load(f)
@@ -19,8 +20,12 @@ def trainer(feature):
 	with open('../numpy_data/labels.npy', 'rb') as f:
 		label_array = np.load(f)
 
-	print('\nLoaded Data...\n')
+	return image_array, label_array
 
+
+
+# This function trains a binary neural network to determine whether a feature is present
+def trainer(feature, image_array, label_array):
 
 	# Get data dimentions
 	img_num = np.shape(image_array)[0]
@@ -48,6 +53,9 @@ def trainer(feature):
 	train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
 	correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
 	accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+	saver = tf.train.Saver()
+	filepath = '../models/one/feature_{}'.format(feature)
 
 	print('Initialised neural network P2...\n')
 
@@ -104,12 +112,15 @@ def trainer(feature):
 	# Training complete
 	print('\nFinished training for feature {}...\n\n'.format(feature))
 
-	sess.close()
+	saver.save(sess, filepath) # save neural net
+	sess.close() # close tensorflow session
 
 
 
 
-# Just testing stuff atm
+# Make a neural net for each feature
 
-for i in range(10):
-	trainer(i+1)
+image_array, label_array = data_loader()
+
+for i in range(17):
+	trainer(i, image_array, label_array)
