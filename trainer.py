@@ -14,10 +14,10 @@ from neural_network import neural_net
 # Load the training data
 def data_loader():
 	# Load the training data
-	with open('../numpy_data/train_images_64.npy', 'rb') as f:
+	with open('./numpy_data/train_images_64.npy', 'rb') as f:
 		image_array = np.load(f)
 
-	with open('../numpy_data/labels.npy', 'rb') as f:
+	with open('./numpy_data/labels.npy', 'rb') as f:
 		label_array = np.load(f)
 
 	return image_array, label_array
@@ -55,7 +55,7 @@ def trainer(feature, image_array, label_array):
 	accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 	saver = tf.train.Saver()
-	filepath = '../models/one/feature_{}'.format(feature)
+	filepath = './models/feature_{}'.format(feature)
 
 	print('Initialised neural network P2...\n')
 
@@ -122,5 +122,4 @@ def trainer(feature, image_array, label_array):
 
 image_array, label_array = data_loader()
 
-for i in range(17):
-	trainer(i, image_array, label_array)
+trainer(9, image_array, label_array)
