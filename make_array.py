@@ -11,7 +11,9 @@ print('\n')
 
 # Constants
 
-img_num = 40479
+img_num = 61191
+test_num = 40668
+file_num = 20521
 img_size = 64
 
 
@@ -39,12 +41,13 @@ def down_sample(image):
 
 image_array = np.zeros([img_num,img_size,img_size,4], dtype=np.uint8)
 
-for i in range(img_num):
+
+for i in range(file_num+1):
 
 	if i%100 == 0:
 		print(i)
 
-	fp = '../train-tif-v2/train_{}.tif'.format(i)
+	fp = '../test-tif-v2/file_{}.tif'.format(i)
 	image = cv2.imread(fp, -1)
 	
 	image_ds = down_sample(image)
@@ -52,5 +55,18 @@ for i in range(img_num):
 	image_array[i,:,:,:] = image_ds
 
 
-with open('../numpy_data/test_images.npy', 'wb') as f:
+for i in range(test_num+1):
+
+	if i%100 == 0:
+		print(i)
+
+	fp = '../test-tif-v2/test_{}.tif'.format(i)
+	image = cv2.imread(fp, -1)
+	
+	image_ds = down_sample(image)
+
+	image_array[i+file_num,:,:,:] = image_ds
+
+
+with open('./numpy_data/test_images_64.npy', 'wb') as f:
 	np.save(f, image_array)

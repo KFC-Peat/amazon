@@ -13,11 +13,11 @@ from neural_network import neural_net
 
 # load image data a previous cross entropy data
 def loader():
-	with open('./numpy_data/train_images_64.npy', 'rb') as f:
+	with open('./numpy_data/test_images_64.npy', 'rb') as f:
 		image_array = np.load(f)
 
 	try:
-		with open('./numpy_data/cross_entropy.npy', 'rb') as f:
+		with open('./numpy_data/cross_entropy_test.npy', 'rb') as f:
 			ce_data = np.load(f)
 	except:
 		ce_data = np.zeros([np.shape(image_array)[0], 17], dtype=np.float32)
@@ -82,7 +82,7 @@ def cross_entropy(image_array, ce_data, feature):
 
 image_array, ce_data = loader()
 
-ce_data = cross_entropy(image_array, ce_data, 9)
+ce_data = cross_entropy(image_array, ce_data, 16)
 
-with open('./numpy_data/cross_entropy.npy', 'wb') as f:
+with open('./numpy_data/cross_entropy_test.npy', 'wb') as f:
 	np.save(f, ce_data)
